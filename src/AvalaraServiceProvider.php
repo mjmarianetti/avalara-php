@@ -32,7 +32,7 @@ class AvalaraServiceProvider extends ServiceProvider
     /**
      * Register the application bindings.
      */
-    private function registerZoho()
+    private function registerAvalara()
     {
         $this->app->bind('Mjmarianetti\Avalara\AvalaraClient', function ($app) {
           if ($this->isLumen()) {
@@ -40,8 +40,8 @@ class AvalaraServiceProvider extends ServiceProvider
           }
 
           $config = [];
-          $config['api_key'] = config('avalara.api_key');
-          return new  AvalaraClient($config);
+          $apiKey = config('avalara.api_key');
+          return new  AvalaraClient($apiKey);
       });
     }
 

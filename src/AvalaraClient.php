@@ -11,9 +11,9 @@ class AvalaraClient
 
   protected $baseUrl = 'https://taxrates.api.avalara.com:443/';
 
-  public function __construct($config)
+  public function __construct($apiKey)
   {
-    $this->apiKey = $config['api_key'];
+    $this->apiKey = $apiKey;
   }
 
   public function getTaxesByAddress($params)
@@ -30,7 +30,7 @@ class AvalaraClient
   {
     $client = new Client();
 
-    if (!$params['apikey']) {
+    if (!isset($params['apikey'])) {
       $params['apikey'] = $this->apiKey;
     }
 
@@ -43,9 +43,9 @@ class AvalaraClient
     }
 
     if ($response->getStatusCode() !== 200) {
-      throw new Exception($response->getBody());
+      throw new Exception($response->getBody()->getContents());
     }
 
-    return $response->getBody();
+    return json_decode($response->getBody()->getContents());
   }
 }
